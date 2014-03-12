@@ -1,14 +1,23 @@
-package leetCode2012;
+package leetCode2011;
 
 import java.util.Scanner;
 
 /******************
  * The string "PAYPALISHIRING" is written in a zigzag pattern 
  * on a given number of rows like this: 
- * (you may want to display this pattern in a fixed font for better legibility)
+ * (you may want to display this pattern in a fixed font for better legibility
+ * num = 3
  * P   A   H   N
  * A P L S I I G
  * Y   I   R
+ * 
+ * Str: PAYPALISHIRINGIGH
+ * num = 4
+ * original length is: 17
+ * P   I   N
+ * A L S I G
+ * Y A H R I H
+ * P   I   G  
  * 
  * And then read line by line: "PAHNAPLSIIGYIR"
  * Write the code that will take a string and make this conversion given a number of rows:
@@ -36,10 +45,11 @@ public class ZigZagConversion {
 		
 		
 		//2nd, convert the original string into ZigZag string
+		System.out.println("original length is: " + oriStr.length());
 		String zigZag = convert(oriStr, num);
 		
 		//printout the zigzag string;
-		System.out.println("ZigZag: " + zigZag);
+		System.out.println("ZigZag: " + zigZag +", Length: " + zigZag.length());
 		
 	}//end of main()
 
@@ -49,25 +59,28 @@ public class ZigZagConversion {
 		
 		//create a matrix of row*col, row=num; col = oriStr.length/(num-1);
 		int row = num;
-		int col = oriStr.length()/(num-1);
+		int col = oriStr.length()/(num-1) +1;
 		char[][] board = new char[row][col];
 		
 		for(int i=0; i<col; i++){
 			
-			if(i%2==0){
+			if(i%2==0){ //even column 0, 2, 4...
 				for(int j=0; j<row; j++){
 					if(i*(num-1) + j < oriStr.length())
 						board[j][i] = oriStr.charAt(i*(num-1) + j);
 					else board[j][i] = ' ';
 				}
 			
-			} else {
+			} else { //odd column, 1, 3, 5...
 				board[0][i] = ' ';
-				board[num-1][i] = ' ';
+				board[num-1][i] = ' '; 	//the first and the last one is blank ' ';
+				
+				//originally, b[j][i] = oriStr.charAt(i*(num-1)+j);
+				//but the zigzag has to swap up and down; so b[j][i] swap to b[num-j-1][i];
 				for(int j=1; j<row-1; j++){
 					if(i*(num-1) + j < oriStr.length())
-						board[j][i] = oriStr.charAt(i*(num-1) + j);
-					else board[j][i] = ' ';
+						board[row-j-1][i] = oriStr.charAt(i*(num-1) + j);
+					else board[row-1-j][i] = ' ';
 				}
 				
 			}//end if-else conditions;
