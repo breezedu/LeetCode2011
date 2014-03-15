@@ -1,4 +1,9 @@
 package leetCode2011;
+/******************
+ * Write a method which takes an array of integers.  The method should return 
+ * true if there is a way to split the array in two so that the sum of the
+ * numbers on one side of the split equals the sum of the numbers on the other side.
+ */
 
 import java.util.HashSet;
 import java.util.Scanner;
