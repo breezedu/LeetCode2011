@@ -28,19 +28,35 @@ public class PartitionProblem {
 		}
 		if(totalSum%2==1) return false;
 		
+		
 		//for a combination of n-elements: n<array.length;
-		for(int combination = 2; combination<array.length/2; combination++){
-			int currSum = 0;
-			int elements = 0;
-			int start =0;
+		//actually, we can reduce the combination from array.length-1 to array.length/2 (trick);
+		for(int combination = 2; combination<array.length; combination++){
+			int currSum = 0;  	//the sum value of this circle;
+			int elements = 0; 	//elements already counted;
+			int start =0; 		//the index that has not been visited;
 			sumCombinationofNElements(currSum, elements, combination, array, start, sumSet);
 			
-		}		
+		}//end for combination<array.length loop;
 		
 		return sumSet.contains(totalSum/2);
 
 	}//end of partitionPro() method;
 
+	/*************
+	 * check the elements already counted: if elements = combination, it means we have summed up
+	 * as many as combination elements in this circle; so add the currSum to hashSet;
+	 * 
+	 * if elements has not reached the combination required, add one more array[] element;
+	 * the new array[] element could be picked from array index [start];
+	 * 
+	 * @param currSum
+	 * @param elements
+	 * @param combination
+	 * @param array
+	 * @param start
+	 * @param sumSet
+	 */
 	private static void sumCombinationofNElements(int currSum, int elements, int combination, 
 			int[] array, int start, HashSet<Integer> sumSet) {
 		// TODO Auto-generated method stub
@@ -57,12 +73,16 @@ public class PartitionProblem {
 				//recover currSum
 				currSum = currSum-array[i];
 				
-			}
+			}//end for i<array.length loop;
 			
 		}//end if-else elements==combination condition;
 		
 	}//end of sumCombinationofNElements() method;
 
+	/********
+	 * create a random array;
+	 * @return
+	 */
 	private static int[] creatArray() {
 		// TODO Auto-generated method stub
 		System.out.println("Please input the num of elements in the array:");
